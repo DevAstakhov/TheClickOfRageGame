@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Click of Rage</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="core/math/matrix.js"></script>
+    <script type="text/javascript" src="core/math/vector.js"></script>
+    <script type="text/javascript" src="core/physics/collisions.js"></script>
+    <script type="text/javascript" src="lib/svgparse.js"></script>
+    <script type="text/javascript" src="model/level.js"></script>
+    <script type="text/javascript" src="levelRunner/gameController.js"></script>
+    <script type="text/javascript" src="levelRunner/levelRunner.js"></script>
+    <script type="text/javascript" src="view/canvas.js"></script>
+    <script type="text/javascript" src="view/forms.js"></script>
+    <script type="application/javascript">
+      let GetLevel = () => {
+        return new Promise((resolve, reject) => {
+          try {
+            let request = new XMLHttpRequest();
+            request.open("GET", "resources/level1.svg");
+            request.setRequestHeader("Content-Type", "image/svg+xml");
+            request.addEventListener("load", function(event) {
+              let level = new Level();
+              level.fromSVGXML(event.target.responseXML);
+              resolve(level);
+            });
+            request.send();
+          } catch (e) {
+            console.log('Failed to load level.');
+            reject(e);
+          }
+        });
+      };
+
+      let forms = new Forms();
+      let runner = new LevelRunner();
+
+      runner.onLevelReset = forms.showCountdown.bind(forms);
+      runner.onWin = forms.showWin.bind(forms);
+      runner.onLoose = forms.showLoose.bind(forms);
+
+      forms.onCountdownEnd = runner.run.bind(runner);
+      forms.onWinAccepted = runner.reset.bind(runner, null);
+      forms.onLooseAccepted = runner.reset.bind(runner, null);
+
+      GetLevel().then(runner.reset.bind(runner));
+    </script>
+  </body>
+</html>

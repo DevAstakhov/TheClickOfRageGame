@@ -1,0 +1,71 @@
+body {
+  margin: 0;
+  align-items: stretch;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  text-align: center;
+}
+
+.overlay {
+/* Sit on top of the page content */
+  position: absolute;
+  z-index: 2;
+
+/* shadow the entire page*/
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #00000090;
+
+  cursor: pointer;
+  text-align: center;
+}
+
+.window {
+  position: absolute;
+  z-index: 3;
+  width: 30%;
+  height: 65%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border: 2px solid #2080A0;
+  background-color: #00000044;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.windowCaption {
+  color: #4ABABA;
+  font-size: 54px;
+}
+
+.windowIcon {
+  padding-left: 2vh;
+  padding-right: 2vh;
+  height: 30vh;
+}
+
+.formButton {
+  font-size: 24px;
+  color: #aaaaaa;
+  background-color: #ffffff00;
+  height: 10%;
+  margin-left: 2vh;
+  margin-right: 2vh;
+  border:1px solid #4ABABA;
+}
+
+.formButton:hover {
+  background-color:#82abb055;
+  color: #aaaaaa;
+}
+
+.formButton:active {
+	position:relative;
+	transform: scale(0.96, 0.96);
+}
